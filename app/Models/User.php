@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +14,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    use HasUuids;
    
     protected $fillable = [
         'name',
@@ -22,10 +24,13 @@ class User extends Authenticatable implements JWTSubject
 
     protected $hidden = [
         'password',
+        'email_verified_at',
+        'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
-    public function getJWTIdentifier()
-    {
+    public function getJWTIdentifier(){
         return $this->getKey();
     }
 
@@ -35,7 +40,11 @@ class User extends Authenticatable implements JWTSubject
             'name' => $this->name,
             'email' => $this->email
         ];
-     }
+    }
 
+
+    public function address(){
+        return $this->hasOne(Address::class);
+    }
 
 }

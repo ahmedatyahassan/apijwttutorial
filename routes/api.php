@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,7 @@ Route::group(['prefix'=> '/shared', 'middleware' => ['authForAll:api&admin']], f
 });
 
 // Available Routes Admins
-Route::group(['middleware' => 'authForAll:admin'], function () {
-    Route::post('admin/category', [CategoryController::class, 'create']);
+Route::group(['prefix'=> '/admin', 'middleware' => 'authForAll:admin'], function () {
+    Route::post('/category', [CategoryController::class, 'create']);
+    Route::get('/users', [UserController::class, 'index']);
 });

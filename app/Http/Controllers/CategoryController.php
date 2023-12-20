@@ -7,6 +7,7 @@ use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+
 class CategoryController extends Controller
 {
     use ApiResponseTrait;

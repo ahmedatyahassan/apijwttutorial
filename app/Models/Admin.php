@@ -2,22 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Admin extends User implements JWTSubject
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    protected $hidden = [
-        'password',
-    ];
+    use HasUuids;
 
     public function getJWTIdentifier()
     {
@@ -30,7 +22,12 @@ class Admin extends User implements JWTSubject
             'name' => $this->name,
             'email' => $this->email
         ];
-     }
+    }
 
+    public function address () {
+        return $this->hasOne(Address::class, 'user_id', 'id');
+    }
+
+    
     
 }
