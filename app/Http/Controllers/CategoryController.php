@@ -13,7 +13,7 @@ class CategoryController extends Controller
     use ApiResponseTrait;
 
     public function index(){
-        $categories = Category::get();
+        $categories = Category::with(['product'])->get();
         return $this->listResponse($categories);
     }
 
